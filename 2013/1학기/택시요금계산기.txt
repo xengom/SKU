@@ -1,0 +1,90 @@
+#include <stdio.h>
+
+void main()
+{
+int n,n2,basic_rate,distance;
+double fee,a,k;
+printf("[1].일반택시 [2].모범택시.\n");
+scanf("%d",&n);
+
+if (n==1)				 
+{
+printf("[1]주간 [2]야간 \n");
+scanf("%d", &n2);
+if (n2==1) 
+{
+basic_rate = 2300;
+printf("거리(정수m)를 입력하세요.\n");
+scanf("%d",&distance);
+if (distance<=2000)			
+{
+fee = basic_rate;
+}
+else 
+{
+k = distance - 2000;
+a = (k/87)*100;
+fee = basic_rate + a;
+}
+printf("요금은 %fee=%1.1lf원 입니다.\n",fee);
+}
+else if (n2==2) 
+{
+basic_rate = 2300;
+printf("거리(정수m)를 입력하세요.\n");
+scanf("%d",&distance);
+if (basic_rate<=2000)
+{
+fee = basic_rate;
+}
+else 
+{
+k = distance - 2000;
+a = (k/87)*100;
+fee = (basic_rate + a)*1.2; //야간할증 20% 가증
+}
+printf("요금은 %fee=%1.1lf원 입니다.\n",fee);
+}
+}
+
+else if(n==2) 
+{
+printf("[1]주간 [2]야간 \n");
+scanf("%d", &n2);
+if (n2==1) 
+{
+basic_rate = 4500;
+printf("거리(정수m)를 입력하세요.\n");
+scanf("%d",&distance);
+if (distance<=3000)
+{
+fee = basic_rate;
+}
+else 
+{
+k = distance -3000;
+a = (k/164)*200;
+fee = basic_rate + a;
+}
+printf("요금은 %fee=%1.1lf원 입니다.\n",fee);
+}
+
+else if (n2==2) 
+{
+basic_rate = 4500;
+printf("거리(정수m)를 입력하세요.\n");
+scanf("%d",distance);
+if (distance<=3000)
+{
+fee = basic_rate;
+}
+else 
+{
+k = distance - 3000;
+a = (k/164)*200;
+fee = (basic_rate + a)*1.2;
+}
+printf("요금은 %fee=%1.1lf원 입니다.\n",fee);
+}
+}
+}

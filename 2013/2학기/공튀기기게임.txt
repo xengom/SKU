@@ -1,0 +1,131 @@
+#include<iostream>
+#include<time.h>
+#include<Windows.h>
+using namespace std;
+
+#define WINDOWMAP_X 18
+#define WINDOWMAP_Y 20
+#define SPEED 1
+#define SLEEP 50
+
+class Ball
+{
+private:
+	int m_iSpeed_X;
+	int m_iSpeed_Y;
+
+	int m_Pos_X;
+	int m_Pos_Y;
+
+	bool Up_X;
+	bool Up_Y;
+public:
+	Ball();
+	void BallMove();
+	int Pos_X()
+	{
+		return m_Pos_X;
+	}
+	int Pos_Y()
+	{
+		return m_Pos_Y;
+	}
+};
+
+Ball::Ball()
+:m_Pos_X(0), m_Pos_Y(0)
+{	
+	m_iSpeed_X = SPEED;
+	m_iSpeed_Y = SPEED;
+	Up_X = true;
+	Up_Y = true;
+}
+void Ball::BallMove()
+{
+	m_Pos_X += m_iSpeed_X;
+	m_Pos_Y += m_iSpeed_Y;
+	
+	if( WINDOWMAP_X <= m_Pos_X)
+	{
+		Up_X = false;
+	}
+	else if( m_Pos_X <= 0)
+	{
+		Up_X = true;
+	}
+
+	if( WINDOWMAP_Y <= m_Pos_Y)
+	{
+		Up_Y = false;
+	}
+	else if( m_Pos_Y <= 0)
+	{
+		Up_Y = true;
+	}
+
+	if(Up_X == true)
+		m_iSpeed_X = SPEED;
+	else
+		m_iSpeed_X = -SPEED;
+	if(Up_Y == true)
+		m_iSpeed_Y = SPEED;
+	else
+		m_iSpeed_Y = -SPEED;
+
+}
+
+class Map : public Ball
+{
+private:
+	int m_Map[WINDOWMAP_X][WINDOWMAP_Y];
+	
+	int m_PosX;
+	int m_PosY;
+public:
+	void Insert();
+	void Pos_XY();
+	void Show();
+};
+
+void Map::Insert()
+{
+	for( int j = 0 ; j < WINDOWMAP_Y ; ++j)
+	{
+		for( int i = 0 ; i < WINDOWMAP_X ; ++i)
+		{
+			m_Map[i][j] =0;
+		}
+	}
+}
+
+void Map::Pos_XY()
+{
+	BallMove();
+
+	m_PosX = Pos_X();
+	m_PosY = Pos_Y();
+
+	m_Map[m_PosY][m_PosX] = 1;
+}
+
+void Map::Show()
+{
+	COORD pos = {m_PosX, m_PosY};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	cout<<"●";
+}
+
+void main()
+{
+	Map boll;
+	boll.Insert();
+
+	while(1)
+	{	
+	boll.Pos_XY();
+	boll.Show();
+	Sleep(SLEEP);
+	system("cls");
+
+	}
+}
